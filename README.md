@@ -69,3 +69,12 @@ CMD ["node", "app.js"]
 docker run -d -p 8080:80 --name task task
 
 kubectl port-forward svc/mongo-express 8081:8081
+
+Build into an image
+#docker login
+
+#docker login -u kenedymanga442
+#docker tag task kenedymanga442/task:assignment
+#ens kubectl apply -f deployment.yaml
+#kubectl apply -f deployment.yaml
+#kubectl apply -f task-deployment.yaml -n lernoassignment
