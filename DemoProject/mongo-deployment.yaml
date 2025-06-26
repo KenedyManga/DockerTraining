@@ -31,6 +31,34 @@ spec:
             cpu: "500m"
 
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  labels:
+    app: webapp
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1    # Max 1 pod can be unavailable during the update
+      maxSurge: 1          # Max 1 extra pod can be added during the update
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: nginx:1.25      # Change image tag to update version
+        ports:
+        - containerPort: 80
+
+---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -61,4 +89,4 @@ spec:
   ports:
   - protocol: TCP
     port: 27017
-    targetPort: 27017 
+    targetPort: 27017
